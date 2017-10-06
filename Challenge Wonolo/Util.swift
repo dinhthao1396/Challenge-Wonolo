@@ -24,7 +24,7 @@ extension UIImageView {
 }
 
 extension UIViewController{
-    func getUserData(url: String, completion: @escaping ([ModelUser], String,String) -> Void) {
+    func getUserData(url: String, completion: @escaping ([ModelUser], String, String) -> Void) {
         Alamofire.request(url)
         .validate()
         .responseJSON{ response in
@@ -44,10 +44,10 @@ extension UIViewController{
                 completion([ModelUser](), isSuccessGetData, isErrorGetData)
                 return
             }
-            guard let userName = results["username"] as? String ,
+            guard let userName = results["username"] as? String,
                 let userID = results["id"] as? String,
-                let fullName = results["full_name"] as? String ,
-                let urlImage = results["profile_picture"] as? String ,
+                let fullName = results["full_name"] as? String,
+                let urlImage = results["profile_picture"] as? String,
                 let counts = results["counts"] as? [String: Float],
                 let follows = counts["follows"],
                 let followed = counts["followed_by"] else {return}
@@ -56,22 +56,21 @@ extension UIViewController{
                 completion([ModelUser(userName: userName, fullName: fullName, follows: Int(follows), followed: Int(followed), urlImage: urlImage, id: userID, isCheck: false)], isSuccessGetData, isErrorGetData)
                 self.view.reloadInputViews()
         }
-        
     }
     
-    func getListFollowAndFollowed(url: String, completion: @escaping ([ModelUser], String,String) -> Void) {
+    func getListFollowAndFollowed(url: String, completion: @escaping ([ModelUser], String, String) -> Void) {
         Alamofire.request(url)
         .validate()
         .responseJSON{ response in
             if response.result.isSuccess {
                 print("JSON Link Available")
             } else {
-                    print("Error: \(String(describing: response.result.error))")
-                    let isErrorGetData = String(describing: response.result.error!)
-                    let isSuccessGetData = "NOT SUCCESS"
-                    completion([ModelUser](), isSuccessGetData, isErrorGetData)
-                    return
-                }
+                print("Error: \(String(describing: response.result.error))")
+                let isErrorGetData = String(describing: response.result.error!)
+                let isSuccessGetData = "NOT SUCCESS"
+                completion([ModelUser](), isSuccessGetData, isErrorGetData)
+                return
+            }
             guard let jsonData = response.result.value as? [String: Any],
                 let results = jsonData["data"] as? [[String: Any]] else {
                     let errorGetData = String(describing: response.result.error!)
@@ -80,9 +79,9 @@ extension UIViewController{
                     return
             }
             let list = results.flatMap({ (dict) -> ModelUser? in
-                guard let userName = dict["username"] as? String ,
-                    let fullName = dict["full_name"] as? String ,
-                    let urlImage = dict["profile_picture"] as? String ,
+                guard let userName = dict["username"] as? String,
+                    let fullName = dict["full_name"] as? String,
+                    let urlImage = dict["profile_picture"] as? String,
                     let userId = dict["id"] as? String else { return nil }
                 return ModelUser(userName: userName, fullName: fullName , follows: 0 , followed: 0, urlImage: urlImage, id: userId, isCheck: false)
             })
@@ -93,7 +92,7 @@ extension UIViewController{
         }
     }
     
-    func getListUserLocation(url: String, completion: @escaping ([ModelUserPostPin], String,String) -> Void) {
+    func getListUserLocation(url: String, completion: @escaping ([ModelUserPostPin], String, String) -> Void) {
         Alamofire.request(url)
         .validate()
         .responseJSON{ response in
@@ -114,10 +113,10 @@ extension UIViewController{
                     return
             }
             let list = results.flatMap({ (dict) -> ModelUserPostPin? in
-                guard let user = dict["user"] as? [String: Any] ,
-                    let fullName = user["full_name"] as? String ,
-                    let urlImageUser = user["profile_picture"] as? String ,
-                    let userName = user["username"] as? String ,
+                guard let user = dict["user"] as? [String: Any],
+                    let fullName = user["full_name"] as? String,
+                    let urlImageUser = user["profile_picture"] as? String,
+                    let userName = user["username"] as? String,
                     let userId = user["id"] as? String ,
                     let images = dict["images"] as? [String: Any],
                     let low = images["low_resolution"] as? [String: Any],

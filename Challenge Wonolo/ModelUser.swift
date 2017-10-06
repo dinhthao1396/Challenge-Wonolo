@@ -17,10 +17,10 @@ class ModelUser: NSObject {
     var id = ""
     var isCheck: Bool
     var manageStateCheck:Bool {
-        get{
+        get {
             return isCheck
         }
-        set{
+        set {
             isCheck = newValue
         }
     }

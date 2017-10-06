@@ -11,9 +11,7 @@ import MapKit
 class CustomCalloutViewController: UIView {
 
     @IBOutlet weak var imagePin: UIImageView!
-    
     @IBOutlet weak var captionPin: UILabel!
-
     @IBOutlet weak var userNamePin: UILabel!
     
     var userId: String!

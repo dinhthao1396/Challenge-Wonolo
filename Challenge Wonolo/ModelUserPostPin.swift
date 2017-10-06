@@ -22,7 +22,7 @@ class ModelUserPostPin: NSObject {
     var userId = ""
     var nameLocation = ""
     var locationId = ""
-    init(userName: String,fullName: String, urlImageCaption: String, text: String, lat: Float, lng: Float, urlImageUser: String, userId: String, nameLocation: String, locationId: String){
+    init(userName: String, fullName: String, urlImageCaption: String, text: String, lat: Float, lng: Float, urlImageUser: String, userId: String, nameLocation: String, locationId: String){
         self.userName = userName
         self.fullName = fullName
         self.urlImageCaption = urlImageCaption
@@ -34,7 +34,6 @@ class ModelUserPostPin: NSObject {
         self.nameLocation = nameLocation
         self.locationId = locationId
     }
-
 }
 
 class ArrayLocation : NSObject, MKAnnotation {

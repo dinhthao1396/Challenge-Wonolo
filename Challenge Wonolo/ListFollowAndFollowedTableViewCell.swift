@@ -12,11 +12,8 @@ class ListFollowAndFollowedTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var userImage: UIImageView!
-    
     @IBOutlet weak var userName: UILabel!
-
     @IBOutlet weak var fullName: UILabel!
-    
     @IBOutlet weak var checkBoxButton: UIButton!
     
     override func awakeFromNib() {
@@ -29,57 +26,45 @@ class ListFollowAndFollowedTableViewCell: UITableViewCell {
         if (sender.isSelected == true){
             setCheckImage()
             testToCheck(sender.isSelected)
-            tapToCheck?(self)
-            print("From cell, button checked")
             sender.isSelected = false
         }else{
             setUnCheckImage()
             testToUnCheck(sender.isSelected)
-            tapToUnCheck?(self)
-            print("From cell, button Unchecked")
             sender.isSelected = true
         }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
-    func setDataForCell(userName: String, fullName: String, urlImage: String, checkStateButton: ModelUser){
+    func setDataForCell(userName: String, fullName: String, urlImage: String, checkStateButton: ModelUser) {
         userImage.layer.cornerRadius = userImage.frame.size.width / 2
         userImage.clipsToBounds = true
         self.userName.text = userName
         self.fullName.text = fullName
         self.userImage.image = UIImage(userImage.downLoadFromUrlDemoSimple(urlSimple: urlImage))
-        if checkStateButton.isCheck == true{
+        if checkStateButton.isCheck == true {
             setCheckImage()
             self.checkBoxButton.isSelected = false
-        }else{
+        } else {
             setUnCheckImage()
             self.checkBoxButton.isSelected = true
         }
     }
     
     var testToCheck = { (dataBool: Bool) -> Void in
-        
     }
     
     var testToUnCheck = { (dataBool: Bool) -> Void in
-        
     }
     
-    var tapToCheck: ((ListFollowAndFollowedTableViewCell) -> Void)?
-    var tapToUnCheck: ((ListFollowAndFollowedTableViewCell) -> Void)?
-    var tapToUp: ((ListFollowAndFollowedTableViewCell) -> Void)?
-    var tapToDown: ((ListFollowAndFollowedTableViewCell) -> Void)?
-    
-    func setCheckImage(){
+    func setCheckImage() {
         self.checkBoxButton.setImage(UIImage(named: "check32"), for: UIControlState.normal)
     }
     
-    func setUnCheckImage(){
+    func setUnCheckImage() {
         self.checkBoxButton.setImage(UIImage(named: "uncheck32"), for: UIControlState.normal)
     }
 }
