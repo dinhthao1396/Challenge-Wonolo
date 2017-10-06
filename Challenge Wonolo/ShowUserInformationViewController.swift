@@ -28,14 +28,14 @@ class ShowUserInformationViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func setDataForView(){
+    func setDataForView() {
         let urlString = "https://api.instagram.com/v1/users/self/?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
         getUserData(url: urlString) { (listData, successData, errorData) in
             self.setDataForLabel(data: listData)
         }
     }
 
-    func setDataForLabel(data: [ModelUser]){
+    func setDataForLabel(data: [ModelUser]) {
         self.userName.text = "User Name: " + (data.first?.userName)!
         self.fullName.text = "Full Name: " + (data.first?.fullName)!
         self.userID.text = "User ID: " + (data.first?.id)!

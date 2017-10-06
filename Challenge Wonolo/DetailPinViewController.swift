@@ -11,19 +11,12 @@ import UIKit
 class DetailPinViewController: UIViewController {
     
     @IBOutlet weak var userImage: UIImageView!
-    
     @IBOutlet weak var userName: UILabel!
-    
     @IBOutlet weak var fullName: UILabel!
-    
     @IBOutlet weak var userId: UILabel!
-    
     @IBOutlet weak var imageCaption: UIImageView!
-    
     @IBOutlet weak var caption: UILabel!
-    
     @IBOutlet weak var nameLocation: UILabel!
-    
     var urlImageUserDetails = ""
     var userNameDetails = ""
     var fullNameDetails = ""
@@ -34,10 +27,7 @@ class DetailPinViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         setDataForDetailsViewController()
-
         // Do any additional setup after loading the view.
     }
 
@@ -47,15 +37,15 @@ class DetailPinViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        if UIDevice.current.orientation.isLandscape{
+        if UIDevice.current.orientation.isLandscape {
             imageCaption.contentMode = UIViewContentMode.scaleAspectFit
         }
-        if UIDevice.current.orientation.isPortrait{
+        if UIDevice.current.orientation.isPortrait {
             imageCaption.contentMode = UIViewContentMode.scaleToFill
         }
     }
     
-    func setDataForDetailsViewController(){
+    func setDataForDetailsViewController() {
         userImage.layer.cornerRadius = userImage.frame.size.width / 2
         userImage.clipsToBounds = true
         userImage.downLoadFromUrlDemoSimple(urlSimple: urlImageUserDetails)
@@ -65,22 +55,13 @@ class DetailPinViewController: UIViewController {
         imageCaption.downLoadFromUrlDemoSimple(urlSimple: urlImageCaptionetails)
         caption.text = "Caption: " + captionDetails
         nameLocation.text = nameLocationDetails
-        if UIDevice.current.orientation.isLandscape{
+        if UIDevice.current.orientation.isLandscape {
             imageCaption.contentMode = UIViewContentMode.scaleAspectFit
         }
-        if UIDevice.current.orientation.isPortrait{
+        if UIDevice.current.orientation.isPortrait {
             imageCaption.contentMode = UIViewContentMode.scaleToFill
         }
     }
-//    if UIDevice.current.orientation.isLandscape{
-//    self.imageUrl.image = UIImage(imageUrl.downLoadFromUrlDemoSimple(urlSimple: urlForGetData))
-//    imageUrl.contentMode = UIViewContentMode.scaleAspectFit
-//    }
-//    if UIDevice.current.orientation.isPortrait{
-//    self.imageUrl.image = UIImage(imageUrl.downLoadFromUrlDemoSimple(urlSimple: urlForGetData))
-//    imageUrl.contentMode = UIViewContentMode.scaleToFill
-//    }
-
 
     /*
     // MARK: - Navigation

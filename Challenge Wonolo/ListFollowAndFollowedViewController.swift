@@ -19,9 +19,8 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
         getListFollowOrListFollowed()
-        //createData()
         myTableView.delegate = self
         myTableView.dataSource = self
         let nib = UINib(nibName: "ListFollowAndFollowedTableViewCell", bundle: nil)
@@ -39,7 +38,7 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
     @IBOutlet weak var showListUserChoice: UIBarButtonItem!
     
     @IBAction func showListUserChoiceAction(_ sender: UIBarButtonItem) {
-        if listUserChoiceToShow.count > 0{
+        if listUserChoiceToShow.count > 0 {
             listUserIdFromListView.removeAll()
             for value in listUserChoiceToShow {
                 let data = value.id
@@ -47,16 +46,16 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
             }
             performSegue(withIdentifier: "connectToMap", sender: self)
             
-        }else{
+        } else {
             showAlertWarning(title: "OMG !!!", content: "You need choice something to show")
         }
     }
 
-    func getListFollowOrListFollowed(){
+    func getListFollowOrListFollowed() {
         var urlString = String()
-        if listFollowOrFollowed == 1{
+        if listFollowOrFollowed == 1 {
              urlString = "https://api.instagram.com/v1/users/self/follows?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
-        }else {
+        } else {
             urlString = "https://api.instagram.com/v1/users/self/followed-by?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
         }
         getListFollowAndFollowed(url: urlString) { (listData, successData , errorData) in
@@ -76,10 +75,9 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         
         cell.testToCheck = { data in
             myData.manageStateCheck = true
-            
             let dataInCell = self.listUserToShow[indexPath.row]
-            if self.listUserChoiceToShow.contains(dataInCell){
-                print("We just add this food for you")
+            if self.listUserChoiceToShow.contains(dataInCell) {
+                print("We just add this element")
             }else{
                 self.listUserChoiceToShow.append(dataInCell)
                 print("User Check \(dataInCell.userName)")
@@ -87,11 +85,10 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         }
         
         cell.testToUnCheck = { data in
-            
             myData.manageStateCheck = false
             let dataInCell = self.listUserToShow[indexPath.row]
             var sum = 0
-            if self.listUserChoiceToShow.contains(dataInCell){
+            if self.listUserChoiceToShow.contains(dataInCell) {
                 for i in 0..<self.listUserChoiceToShow.count {
                     if dataInCell == self.listUserChoiceToShow[i] {
                         sum = sum + i
@@ -101,7 +98,6 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
                 print("User UnCheck \(dataInCell.userName)")
             }
         }
-
         return cell
     }
     
@@ -112,7 +108,7 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         }
     }
     
-    func showAlertWarning(title: String, content: String){
+    func showAlertWarning(title: String, content: String) {
         let alert = UIAlertController(title: title, message: content , preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
             print("User Click Ok To Choice Again")

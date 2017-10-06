@@ -12,8 +12,6 @@ import CoreLocation
 import Alamofire
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-   
-    
     @IBOutlet weak var myMaps: MKMapView!
     var locationManager = CLLocationManager()
     var listDataToShow = [ModelUserPostPin]()
@@ -52,7 +50,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         checkDataToShow()
     }
     
-    func comeBackMyLocation(){
+    func comeBackMyLocation() {
         let latitude:CLLocationDegrees = (locationManager.location?.coordinate.latitude)!
         let longitude:CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
         let latDelta:CLLocationDegrees = 0.05
@@ -65,32 +63,31 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        if annotation is MKUserLocation{
+        if annotation is MKUserLocation {
             return nil
         }
         var annotationView = self.myMaps.dequeueReusableAnnotationView(withIdentifier: "Pin")
-        if annotationView == nil{
+        if annotationView == nil {
             annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
             annotationView?.canShowCallout = false
             //annotationView?.isEnabled = true
             
-        }else{
+        } else {
             annotationView?.annotation = annotation
         }
         annotationView?.image = UIImage(named: "marker")
         return annotationView
     }
     
-    func checkDataToShow(){
-        if isAllList == 1{
+    func checkDataToShow() {
+        if isAllList == 1 {
             loadAllListOnMap()
-        }else{
+        } else {
             loadDataLocation(listUserId: listUserIdFromListView)
         }
     }
     
-    func loadAllListOnMap(){
+    func loadAllListOnMap() {
         myMaps.showsUserLocation = true
         var arrayApi = [String]()
         let tempApiFollows = "https://api.instagram.com/v1/users/self/follows?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
@@ -99,7 +96,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         arrayApi.append(tempApiFollowed)
         for api in arrayApi {
             getListFollowAndFollowed(url: api) { (listData, successData , errorData) in
-                for value in listData{
+                for value in listData {
                     let tempUserId = value.id
                     self.listUserIdAllList.append(tempUserId)
                 }
@@ -110,7 +107,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    func setDataForPin(dataArray: [ModelUserPostPin]){
+    func setDataForPin(dataArray: [ModelUserPostPin]) {
         for value in dataArray {
             myMaps.delegate = self
             myMaps.showsUserLocation = true
@@ -126,9 +123,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
-    {
-        if view.annotation is MKUserLocation{
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if view.annotation is MKUserLocation {
             return
         }
         let myAnnotation = view.annotation as! MyCusTomAnnotation
@@ -150,8 +146,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setCenter((view.annotation?.coordinate)!, animated: true)
     }
     
-    func callPhoneNumber(sender: UIButton)
-    {
+    func callPhoneNumber(sender: UIButton) {
         makeChoice(title: "More Details")
         let v = sender.superview as! CustomCalloutViewController
         urlImageUserDetails = v.urlImageUser
@@ -175,15 +170,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             desViewController.captionDetails = self.captionDetails
         }
     }
-//    var urlImageUserDetails = ""
-//    var userNameDetails = ""
-//    var fullNameetails = ""
-//    var userIdDetails = ""
-//    var urlImageCaptionetails = ""
-//    var captionetails = ""
     
     func loadDataLocation(listUserId: [String]) {
-        for value in listUserId{
+        for value in listUserId {
             let urlToShow = "https://api.instagram.com/v1/users/\(value)/media/recent/?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
             getListUserLocation(url: urlToShow, completion: { (listData, success, error) in
                 self.setDataForPin(dataArray: listData)
@@ -194,16 +183,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        if view.isKind(of: AnnotationView.self)
-        {
-            for subview in view.subviews
-            {
+        if view.isKind(of: AnnotationView.self) {
+            for subview in view.subviews {
                 subview.removeFromSuperview()
             }
         }
     }
         
-    func makeChoice(title: String){
+    func makeChoice(title: String) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Details", style: .default, handler: detailsPin))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
@@ -211,7 +198,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.present(alert, animated:  true, completion: nil)
     }
     
-    func detailsPin(alert: UIAlertAction){
+    func detailsPin(alert: UIAlertAction) {
         print("More Detail")
         performSegue(withIdentifier: "showDetails", sender: self)
     }
