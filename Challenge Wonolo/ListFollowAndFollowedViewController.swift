@@ -11,8 +11,8 @@ import UIKit
 class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var myTableView: UITableView!
-    var listUserToShow: [ModelUser] = []
-    var listUserChoiceToShow: [ModelUser] = []
+    var listUserToShow: [ModelListFollowOrFollowed] = []
+    var listUserChoiceToShow: [ModelListFollowOrFollowed] = []
     var listUserIdFromListView = [String]()
     var userId = String()
     var listFollowOrFollowed = Int()
@@ -51,15 +51,19 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         }
     }
 
-    func getListFollowOrListFollowed() {
+    func getListFollowOrListFollowed(){
         var urlString = String()
         if listFollowOrFollowed == 1 {
-             urlString = "https://api.instagram.com/v1/users/self/follows?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
-        } else {
+            urlString = "https://api.instagram.com/v1/users/self/follows?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
+        }else {
             urlString = "https://api.instagram.com/v1/users/self/followed-by?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
         }
         getListFollowAndFollowed(url: urlString) { (listData, successData , errorData) in
-            self.listUserToShow = listData
+            print("In o List Ne")
+            for value in listData! {
+                let tempData = ModelListFollowOrFollowed(JSON: value, isCheck: false)
+                self.listUserToShow.append(tempData!)
+            }
             self.myTableView.reloadData()
         }
     }

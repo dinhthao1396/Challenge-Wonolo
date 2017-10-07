@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181E8F1E1F889E170049EB04 /* ModelListFollowOrFollowed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E8F1D1F889E170049EB04 /* ModelListFollowOrFollowed.swift */; };
 		184FC4291F7F9179005B7EB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184FC4281F7F9179005B7EB8 /* AppDelegate.swift */; };
 		184FC42B1F7F9179005B7EB8 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184FC42A1F7F9179005B7EB8 /* FirstViewController.swift */; };
 		184FC42E1F7F9179005B7EB8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184FC42C1F7F9179005B7EB8 /* Main.storyboard */; };
@@ -112,6 +113,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		181E8F1D1F889E170049EB04 /* ModelListFollowOrFollowed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelListFollowOrFollowed.swift; sourceTree = "<group>"; };
 		184FC4251F7F9179005B7EB8 /* Challenge Wonolo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Challenge Wonolo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		184FC4281F7F9179005B7EB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		184FC42A1F7F9179005B7EB8 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			children = (
 				18BBB1EF1F7FA42A00C0AE62 /* ModelUser.swift */,
 				18BBB44F1F7FCD3600C0AE62 /* ModelUserPostPin.swift */,
+				181E8F1D1F889E170049EB04 /* ModelListFollowOrFollowed.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				18BBB4521F7FE2AF00C0AE62 /* ListFollowAndFollowedViewController.swift in Sources */,
 				18BBB1F01F7FA42A00C0AE62 /* ModelUser.swift in Sources */,
 				18BBB0661F7F9C2D00C0AE62 /* Util.swift in Sources */,
+				181E8F1E1F889E170049EB04 /* ModelListFollowOrFollowed.swift in Sources */,
 				18BBB0381F7F947300C0AE62 /* ShowUserInformationViewController.swift in Sources */,
 				18BBB4551F7FE44300C0AE62 /* ListFollowAndFollowedTableViewCell.swift in Sources */,
 				18BBB44D1F7FCA1700C0AE62 /* MapViewController.swift in Sources */,

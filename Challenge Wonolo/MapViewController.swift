@@ -31,7 +31,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.navigationController?.isNavigationBarHidden = false
         super.viewDidLoad()
         myMaps.delegate = self
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "My Location", style: .plain, target: self, action: #selector(MapViewController.comeBackMyLocation) )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "My Location", style: .plain, target: self, action: #selector(MapViewController.comeBackMyLocation))
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
@@ -96,9 +96,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         arrayApi.append(tempApiFollowed)
         for api in arrayApi {
             getListFollowAndFollowed(url: api) { (listData, successData , errorData) in
-                for value in listData {
-                    let tempUserId = value.id
-                    self.listUserIdAllList.append(tempUserId)
+                for value in listData! {
+                    let tempData = ModelListFollowOrFollowed(JSON: value, isCheck: false)
+                    let tempId = tempData?.id
+                    
+                    self.listUserIdAllList.append(tempId!)
                 }
                 self.loadDataLocation(listUserId: self.listUserIdAllList)
                 self.myMaps.reloadInputViews()
@@ -175,9 +177,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         for value in listUserId {
             let urlToShow = "https://api.instagram.com/v1/users/\(value)/media/recent/?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
             getListUserLocation(url: urlToShow, completion: { (listData, success, error) in
-                self.setDataForPin(dataArray: listData)
-                self.view.reloadInputViews()
-                self.myMaps.reloadInputViews()
+                if listData == nil {
+                    print("Can't Access User Media")
+                }else {
+                    print(listData!)
+                    for value in listData! {
+                        let tempData = ModelUserPostPin(JSON: value)
+                        if tempData == nil {
+                            print("Nil value, because thit post not location")
+                        }else {
+                            self.listDataToShow.append(tempData!)
+                        }
+                    }
+                    self.setDataForPin(dataArray: self.listDataToShow)
+                    self.view.reloadInputViews()
+                    self.myMaps.reloadInputViews()
+                }
             })
         }
     }

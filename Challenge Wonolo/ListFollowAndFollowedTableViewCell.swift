@@ -23,11 +23,11 @@ class ListFollowAndFollowedTableViewCell: UITableViewCell {
     }
     
     @IBAction func checkBox(_ sender: UIButton) {
-        if (sender.isSelected == true){
+        if (sender.isSelected == true) {
             setCheckImage()
             testToCheck(sender.isSelected)
             sender.isSelected = false
-        }else{
+        } else {
             setUnCheckImage()
             testToUnCheck(sender.isSelected)
             sender.isSelected = true
@@ -39,7 +39,7 @@ class ListFollowAndFollowedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setDataForCell(userName: String, fullName: String, urlImage: String, checkStateButton: ModelUser) {
+    func setDataForCell(userName: String, fullName: String, urlImage: String, checkStateButton: ModelListFollowOrFollowed) {
         userImage.layer.cornerRadius = userImage.frame.size.width / 2
         userImage.clipsToBounds = true
         self.userName.text = userName

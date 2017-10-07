@@ -22,7 +22,22 @@ class ModelUserPostPin: NSObject {
     var userId = ""
     var nameLocation = ""
     var locationId = ""
-    init(userName: String, fullName: String, urlImageCaption: String, text: String, lat: Float, lng: Float, urlImageUser: String, userId: String, nameLocation: String, locationId: String){
+    init?(JSON: [String: Any]) {
+        guard let user = JSON["user"] as? [String: Any],
+            let fullName = user["full_name"] as? String,
+            let urlImageUser = user["profile_picture"] as? String,
+            let userName = user["username"] as? String,
+            let userId = user["id"] as? String,
+            let images = JSON["images"] as? [String: Any],
+            let low = images["low_resolution"] as? [String: Any],
+            let urlImageCaption = low["url"] as? String,
+            let caption = JSON["caption"] as? [String: Any],
+            let text = caption["text"] as? String,
+            let location = JSON["location"] as? [String: Any],
+            let lat = location["latitude"] as? Float,
+            let lng = location["longitude"] as? Float,
+            let nameLocation = location["name"] as? String,
+            let idLocation = location["id"] as? Float else { return nil }
         self.userName = userName
         self.fullName = fullName
         self.urlImageCaption = urlImageCaption
@@ -32,7 +47,7 @@ class ModelUserPostPin: NSObject {
         self.urlImageUser = urlImageUser
         self.userId = userId
         self.nameLocation = nameLocation
-        self.locationId = locationId
+        self.locationId = String(idLocation)
     }
 }
 
