@@ -59,7 +59,6 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
             urlString = "https://api.instagram.com/v1/users/self/followed-by?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
         }
         getListFollowAndFollowed(url: urlString) { (listData, successData , errorData) in
-            print("In o List Ne")
             for value in listData! {
                 let tempData = ModelListFollowOrFollowed(JSON: value, isCheck: false)
                 self.listUserToShow.append(tempData!)
