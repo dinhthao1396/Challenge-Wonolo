@@ -47,7 +47,7 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
             performSegue(withIdentifier: "connectToMap", sender: self)
             
         } else {
-            showAlertWarning(title: "OMG !!!", content: "You need choice something to show")
+            showAlertWarning(title: "OMG !!!", content: "You need choice someone to show")
         }
     }
 
