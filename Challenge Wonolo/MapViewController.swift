@@ -173,16 +173,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func loadDataLocation(listUserId: [String]) {
         for value in listUserId {
             let urlToShow = "https://api.instagram.com/v1/users/\(value)/media/recent/?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
-            getListUserLocation(url: urlToShow, completion: { (listData, success, error) in
-                if listData == nil {
+            getListUserLocation(url: urlToShow, completion: { (jsonData, success, error) in
+                if jsonData == nil {
                     print("Can't Access User Media")
                 }else {
-                    for value in listData! {
-                        let tempData = ModelUserPostPin(JSON: value)
-                        if tempData == nil {
+                    for value in jsonData! {
+                        let tempDataOfPost = ModelUserPostPin(JSON: value)
+                        if tempDataOfPost == nil {
                             print("Nil value, because thit post not location")
                         }else {
-                            self.listDataToShow.append(tempData!)
+                            self.listDataToShow.append(tempDataOfPost!)
                         }
                     }
                     self.setDataForPin(dataArray: self.listDataToShow)
