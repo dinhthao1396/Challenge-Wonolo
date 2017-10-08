@@ -25,11 +25,11 @@ class ListFollowAndFollowedTableViewCell: UITableViewCell {
     @IBAction func checkBox(_ sender: UIButton) {
         if (sender.isSelected == true) {
             setCheckImage()
-            testToCheck(sender.isSelected)
+            tapToCheck(sender.isSelected)
             sender.isSelected = false
         } else {
             setUnCheckImage()
-            testToUnCheck(sender.isSelected)
+            tapToUnCheck(sender.isSelected)
             sender.isSelected = true
         }
     }
@@ -54,10 +54,10 @@ class ListFollowAndFollowedTableViewCell: UITableViewCell {
         }
     }
     
-    var testToCheck = { (dataBool: Bool) -> Void in
+    var tapToCheck = { (dataBool: Bool) -> Void in
     }
     
-    var testToUnCheck = { (dataBool: Bool) -> Void in
+    var tapToUnCheck = { (dataBool: Bool) -> Void in
     }
     
     func setCheckImage() {

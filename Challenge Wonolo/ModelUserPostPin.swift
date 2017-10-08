@@ -51,19 +51,4 @@ class ModelUserPostPin: NSObject {
     }
 }
 
-class ArrayLocation : NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var subtitle: String?
-    var image: UIImage?
-    var url: String?
-    var fullName: String?
-    init(coordinate: CLLocationCoordinate2D, userName: String, text: String, url: String, fullName: String) {
-        self.coordinate = coordinate
-        self.title = userName
-        self.subtitle = text
-        self.url = url
-        self.fullName = fullName
-    }
-}
 

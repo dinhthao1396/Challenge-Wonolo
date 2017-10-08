@@ -19,7 +19,6 @@
 		189ED3D41F82C1E900A76A6B /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189ED3D31F82C1E900A76A6B /* AnnotationView.swift */; };
 		18A21C8D1F87D763008E69DD /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A21C7E1F87D754008E69DD /* Alamofire.framework */; };
 		18A21C8E1F87D763008E69DD /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18A21C7E1F87D754008E69DD /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		18BBB0361F7F93DB00C0AE62 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBB0351F7F93DB00C0AE62 /* LoginViewController.swift */; };
 		18BBB0381F7F947300C0AE62 /* ShowUserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBB0371F7F947300C0AE62 /* ShowUserInformationViewController.swift */; };
 		18BBB0661F7F9C2D00C0AE62 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBB0651F7F9C2D00C0AE62 /* Util.swift */; };
 		18BBB1F01F7FA42A00C0AE62 /* ModelUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBB1EF1F7FA42A00C0AE62 /* ModelUser.swift */; };
@@ -126,7 +125,6 @@
 		189ED3C81F82B7BD00A76A6B /* CustomCalloutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCalloutViewController.xib; sourceTree = "<group>"; };
 		189ED3D31F82C1E900A76A6B /* AnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		18A21C721F87D754008E69DD /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Source/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
-		18BBB0351F7F93DB00C0AE62 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		18BBB0371F7F947300C0AE62 /* ShowUserInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowUserInformationViewController.swift; sourceTree = "<group>"; };
 		18BBB0651F7F9C2D00C0AE62 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		18BBB1EF1F7FA42A00C0AE62 /* ModelUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelUser.swift; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 			isa = PBXGroup;
 			children = (
 				184FC42A1F7F9179005B7EB8 /* FirstViewController.swift */,
-				18BBB0351F7F93DB00C0AE62 /* LoginViewController.swift */,
 				18BBB0371F7F947300C0AE62 /* ShowUserInformationViewController.swift */,
 				18BBB4511F7FE2AF00C0AE62 /* ListFollowAndFollowedViewController.swift */,
 				18BBB44C1F7FCA1700C0AE62 /* MapViewController.swift */,
@@ -403,7 +400,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18BBB0361F7F93DB00C0AE62 /* LoginViewController.swift in Sources */,
 				189ED3C91F82B7BD00A76A6B /* CustomCalloutViewController.swift in Sources */,
 				18BBB4661F802A1100C0AE62 /* DetailPinViewController.swift in Sources */,
 				189ED3D41F82C1E900A76A6B /* AnnotationView.swift in Sources */,

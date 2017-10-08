@@ -30,8 +30,8 @@ class ShowUserInformationViewController: UIViewController {
     
     func setDataForView() {
         let urlString = "https://api.instagram.com/v1/users/self/?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
-        getUserData(url: urlString) { (listData, successData, errorData) in
-            let data = ModelUser(JSON: listData!)
+        getUserData(url: urlString) { (jsonData, successData, errorData) in
+            let data = ModelUser(JSON: jsonData!)
             self.setDataForLabel(data: data!)
         }
     }
@@ -49,7 +49,7 @@ class ShowUserInformationViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
     }
     
-    @IBAction func listFollowAndFollowedAction(_ sender: UIButton) {
+    @IBAction func listFollowAction(_ sender: UIButton) {
         listFollowOrFollowed = 1
         performSegue(withIdentifier: "listFollowAndListFollowed", sender: self)
     }

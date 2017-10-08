@@ -70,8 +70,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if annotationView == nil {
             annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
             annotationView?.canShowCallout = false
-            //annotationView?.isEnabled = true
-            
         } else {
             annotationView?.annotation = annotation
         }
@@ -95,11 +93,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let tempApiFollowed = "https://api.instagram.com/v1/users/self/followed-by?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
         arrayApi.append(tempApiFollowed)
         for api in arrayApi {
-            getListFollowAndFollowed(url: api) { (listData, successData , errorData) in
+            getListFollowAndFollowed(url: api) {(listData, successData , errorData) in
                 for value in listData! {
                     let tempData = ModelListFollowOrFollowed(JSON: value, isCheck: false)
                     let tempId = tempData?.id
-                    
                     self.listUserIdAllList.append(tempId!)
                 }
                 self.loadDataLocation(listUserId: self.listUserIdAllList)
@@ -140,7 +137,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         calloutView.nameLocation = myAnnotation.nameLocation
         calloutView.urlImageCaption = myAnnotation.urlImageCaption
         let button = UIButton(frame: calloutView.frame)
-        button.addTarget(self, action: #selector(MapViewController.callPhoneNumber(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(MapViewController.customCalloutView(sender:)), for: .touchUpInside)
         calloutView.addSubview(button)
         calloutView.imagePin.downLoadFromUrlDemoSimple(urlSimple: myAnnotation.urlImageCaption)
         calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.size.height*0.52)
@@ -148,20 +145,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setCenter((view.annotation?.coordinate)!, animated: true)
     }
     
-    func callPhoneNumber(sender: UIButton) {
+    func customCalloutView(sender: UIButton) {
         makeChoice(title: "More Details")
-        let v = sender.superview as! CustomCalloutViewController
-        urlImageUserDetails = v.urlImageUser
-        urlImageCaptionetails = v.urlImageCaption
-        userNameDetails = v.userNamePin.text!
-        fullNameDetails = v.fullName
-        userIdDetails = v.userId
-        nameLocationDetails = v.nameLocation
-        captionDetails = v.captionPin.text!
+        let customCallout = sender.superview as! CustomCalloutViewController
+        urlImageUserDetails = customCallout.urlImageUser
+        urlImageCaptionetails = customCallout.urlImageCaption
+        userNameDetails = customCallout.userNamePin.text!
+        fullNameDetails = customCallout.fullName
+        userIdDetails = customCallout.userId
+        nameLocationDetails = customCallout.nameLocation
+        captionDetails = customCallout.captionPin.text!
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "showDetails"){
+        if (segue.identifier == "showDetails") {
             let desViewController = segue.destination as! DetailPinViewController
             desViewController.urlImageUserDetails = self.urlImageUserDetails
             desViewController.urlImageCaptionetails = self.urlImageCaptionetails
@@ -180,7 +177,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 if listData == nil {
                     print("Can't Access User Media")
                 }else {
-                    print(listData!)
                     for value in listData! {
                         let tempData = ModelUserPostPin(JSON: value)
                         if tempData == nil {

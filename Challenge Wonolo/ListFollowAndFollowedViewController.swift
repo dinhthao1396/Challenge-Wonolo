@@ -58,8 +58,8 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         }else {
             urlString = "https://api.instagram.com/v1/users/self/followed-by?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
         }
-        getListFollowAndFollowed(url: urlString) { (listData, successData , errorData) in
-            for value in listData! {
+        getListFollowAndFollowed(url: urlString) { (jsonData, successData , errorData) in
+            for value in jsonData! {
                 let tempData = ModelListFollowOrFollowed(JSON: value, isCheck: false)
                 self.listUserToShow.append(tempData!)
             }
@@ -73,22 +73,22 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell") as! ListFollowAndFollowedTableViewCell
-        let myData = listUserToShow[indexPath.row]
-        cell.setDataForCell(userName: "Name: " + myData.userName, fullName: "Full Name: " + myData.fullName, urlImage: myData.urlImage, checkStateButton: myData)
+        let dataForCell = listUserToShow[indexPath.row]
+        cell.setDataForCell(userName: "Name: " + dataForCell.userName, fullName: "Full Name: " + dataForCell.fullName, urlImage: dataForCell.urlImage, checkStateButton: dataForCell)
         
-        cell.testToCheck = { data in
-            myData.manageStateCheck = true
+        cell.tapToCheck = { data in
+            dataForCell.manageStateCheck = true
             let dataInCell = self.listUserToShow[indexPath.row]
             if self.listUserChoiceToShow.contains(dataInCell) {
-                print("We just add this element")
-            }else{
+                print("Do nothing")
+            } else {
                 self.listUserChoiceToShow.append(dataInCell)
                 print("User Check \(dataInCell.userName)")
             }
         }
         
-        cell.testToUnCheck = { data in
-            myData.manageStateCheck = false
+        cell.tapToUnCheck = { data in
+            dataForCell.manageStateCheck = false
             let dataInCell = self.listUserToShow[indexPath.row]
             var sum = 0
             if self.listUserChoiceToShow.contains(dataInCell) {
@@ -105,7 +105,7 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "connectToMap"){
+        if (segue.identifier == "connectToMap") {
             let desViewController = segue.destination as! MapViewController
             desViewController.listUserIdFromListView = self.listUserIdFromListView
         }
