@@ -48,9 +48,8 @@
                                                             <constraint firstItem="k4I-Rv-497" firstAttribute="centerX" secondItem="vLw-Es-jug" secondAttribute="centerX" id="nio-4W-LlC"/>
                                                         </constraints>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tran Dinh Thao" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTN-1c-vf1">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tran Dinh Thao" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTN-1c-vf1">
                                                         <rect key="frame" x="8" y="511" width="117" height="21"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -58,10 +57,12 @@
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.89283419023451482" green="0.96725156382361355" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
+                                                    <constraint firstItem="BTN-1c-vf1" firstAttribute="leading" secondItem="Oto-MI-P0Z" secondAttribute="leading" constant="8" id="8VD-kH-2AG"/>
                                                     <constraint firstAttribute="trailing" secondItem="vLw-Es-jug" secondAttribute="trailing" constant="30" id="Nts-38-aYI"/>
                                                     <constraint firstItem="vLw-Es-jug" firstAttribute="centerX" secondItem="Oto-MI-P0Z" secondAttribute="centerX" id="Ohu-Sq-epp"/>
                                                     <constraint firstItem="vLw-Es-jug" firstAttribute="centerY" secondItem="Oto-MI-P0Z" secondAttribute="centerY" id="lK1-5c-4rt"/>
                                                     <constraint firstItem="vLw-Es-jug" firstAttribute="leading" secondItem="Oto-MI-P0Z" secondAttribute="leading" constant="30" id="peE-87-C9C"/>
+                                                    <constraint firstAttribute="bottom" secondItem="BTN-1c-vf1" secondAttribute="bottom" constant="8" id="tJf-u8-I4B"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
