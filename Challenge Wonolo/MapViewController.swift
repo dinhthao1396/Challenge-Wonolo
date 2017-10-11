@@ -26,6 +26,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var urlImageCaptionetails = ""
     var captionDetails = ""
     var nameLocationDetails = ""
+    var latCenter = ""
+    var lngCenter = ""
+    var counterTime = 0.0
+    var timer = Timer()
+    var isSelectMarker = 0
 
     override func viewDidLoad() {
         self.navigationController?.isNavigationBarHidden = false
@@ -46,11 +51,59 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let span = MKCoordinateSpanMake(latDelta, longDelta)
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegionMake(location, span)
-        myMaps.setRegion(region, animated: false)
+        myMaps.setRegion(region, animated: true)
         checkDataToShow()
     }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if isAllList == 0 {
+            print("List Mode")
+        }
+        if isAllList == 1 && isSelectMarker == 0 {
+            latCenter = String(mapView.centerCoordinate.latitude)
+            lngCenter = String(mapView.centerCoordinate.longitude)
+            runTime()
+        }
+    }
     
+    func runTime() {
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    }
+    
+    func timerAction() {
+        counterTime = counterTime + 0.5
+        if counterTime == 1.5 {
+            timer.invalidate()
+            loadDataAroundLocationCenter(lat: latCenter, lng: lngCenter)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if isAllList == 1 {
+            removeAnnotation()
+            timer.invalidate()
+            isSelectMarker = 0
+        }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if isAllList == 1 {
+            timer.invalidate()
+            counterTime = 0
+        }
+    }
+    
+    func removeAnnotation() {
+        let annotationsToRemove = myMaps.annotations.filter { $0 !== myMaps.userLocation }
+        myMaps.removeAnnotations( annotationsToRemove )
+    }
+
     func comeBackMyLocation() {
+        if isAllList == 1 {
+            timer.invalidate()
+            counterTime = 0
+            removeAnnotation()
+        }
         let latitude:CLLocationDegrees = (locationManager.location?.coordinate.latitude)!
         let longitude:CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
         let latDelta:CLLocationDegrees = 0.05
@@ -58,7 +111,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let span = MKCoordinateSpanMake(latDelta, lonDelta)
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegionMake(location, span)
-        myMaps.setRegion(region, animated: false)
+        myMaps.setRegion(region, animated: true)
         myMaps.reloadInputViews()
     }
 
@@ -79,30 +132,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func checkDataToShow() {
         if isAllList == 1 {
-            loadAllListOnMap()
+            print("List Mode")
         } else {
             loadDataLocation(listUserId: listUserIdFromListView)
-        }
-    }
-    
-    func loadAllListOnMap() {
-        myMaps.showsUserLocation = true
-        var arrayApi = [String]()
-        let tempApiFollows = "https://api.instagram.com/v1/users/self/follows?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
-        arrayApi.append(tempApiFollows)
-        let tempApiFollowed = "https://api.instagram.com/v1/users/self/followed-by?access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
-        arrayApi.append(tempApiFollowed)
-        for api in arrayApi {
-            getListFollowAndFollowed(url: api) {(listData, successData , errorData) in
-                for value in listData! {
-                    let tempData = ModelListFollowOrFollowed(JSON: value, isCheck: false)
-                    let tempId = tempData?.id
-                    self.listUserIdAllList.append(tempId!)
-                }
-                self.loadDataLocation(listUserId: self.listUserIdAllList)
-                self.myMaps.reloadInputViews()
-                self.view.reloadInputViews()
-            }
         }
     }
     
@@ -126,6 +158,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if view.annotation is MKUserLocation {
             return
         }
+        if isAllList == 1 {
+            isSelectMarker = 1
+            timer.invalidate()
+        }
         let myAnnotation = view.annotation as! MyCusTomAnnotation
         let views = Bundle.main.loadNibNamed("CustomCalloutViewController", owner: nil, options: nil)
         let calloutView = views?[0] as! CustomCalloutViewController
@@ -146,7 +182,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func customCalloutView(sender: UIButton) {
-        makeChoice(title: "More Details")
         let customCallout = sender.superview as! CustomCalloutViewController
         urlImageUserDetails = customCallout.urlImageUser
         urlImageCaptionetails = customCallout.urlImageCaption
@@ -155,6 +190,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         userIdDetails = customCallout.userId
         nameLocationDetails = customCallout.nameLocation
         captionDetails = customCallout.captionPin.text!
+        performSegue(withIdentifier: "showDetails", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -167,7 +203,33 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             desViewController.userIdDetails = self.userIdDetails
             desViewController.nameLocationDetails = self.nameLocationDetails
             desViewController.captionDetails = self.captionDetails
+            
         }
+    }
+    
+    func loadDataAroundLocationCenter(lat: String, lng: String) {
+        removeAnnotation()
+        listDataToShow.removeAll()
+        let urlToShow = "https://api.instagram.com/v1/media/search?lat=\(lat)&lng=\(lng)&access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
+        print(urlToShow)
+        getListUserLocation(url: urlToShow, completion: { (jsonData, success, error) in
+            if jsonData == nil {
+                print("Can't Access User Media")
+            } else {
+                for value in jsonData! {
+                    let tempDataOfPost = ModelUserPostPin(JSON: value)
+                    if tempDataOfPost == nil {
+                        print("Nil value")
+                    } else {
+                        self.listDataToShow.append(tempDataOfPost!)
+                    }
+                self.setDataForPin(dataArray: self.listDataToShow)
+                }
+                print("Now, the piker in map is \(self.listDataToShow.count)")
+                self.view.reloadInputViews()
+                self.myMaps.reloadInputViews()
+            }
+        })
     }
     
     func loadDataLocation(listUserId: [String]) {
@@ -176,12 +238,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             getListUserLocation(url: urlToShow, completion: { (jsonData, success, error) in
                 if jsonData == nil {
                     print("Can't Access User Media")
-                }else {
+                } else {
                     for value in jsonData! {
                         let tempDataOfPost = ModelUserPostPin(JSON: value)
                         if tempDataOfPost == nil {
-                            print("Nil value, because thit post not location")
-                        }else {
+                            print("Nil value")
+                        } else {
                             self.listDataToShow.append(tempDataOfPost!)
                         }
                     }
@@ -199,19 +261,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 subview.removeFromSuperview()
             }
         }
-    }
-        
-    func makeChoice(title: String) {
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Details", style: .default, handler: detailsPin))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-        }))
-        self.present(alert, animated:  true, completion: nil)
-    }
-    
-    func detailsPin(alert: UIAlertAction) {
-        print("More Detail")
-        performSegue(withIdentifier: "showDetails", sender: self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -231,4 +280,5 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     */
 
 }
+
 

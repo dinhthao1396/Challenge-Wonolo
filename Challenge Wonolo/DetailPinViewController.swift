@@ -41,7 +41,7 @@ class DetailPinViewController: UIViewController {
             imageCaption.contentMode = UIViewContentMode.scaleAspectFit
         }
         if UIDevice.current.orientation.isPortrait {
-            imageCaption.contentMode = UIViewContentMode.scaleToFill
+            imageCaption.contentMode = UIViewContentMode.scaleAspectFit
         }
     }
     
@@ -59,7 +59,7 @@ class DetailPinViewController: UIViewController {
             imageCaption.contentMode = UIViewContentMode.scaleAspectFit
         }
         if UIDevice.current.orientation.isPortrait {
-            imageCaption.contentMode = UIViewContentMode.scaleToFill
+            imageCaption.contentMode = UIViewContentMode.scaleAspectFit
         }
     }
 

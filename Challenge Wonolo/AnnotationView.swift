@@ -41,7 +41,6 @@ class MyCusTomAnnotation: NSObject, MKAnnotation {
     var nameLocation: String!
     var fullName: String!
     var urlImageUser: String!
-    
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
     }

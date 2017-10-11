@@ -77,7 +77,7 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         cell.setDataForCell(userName: "Name: " + dataForCell.userName, fullName: "Full Name: " + dataForCell.fullName, urlImage: dataForCell.urlImage, checkStateButton: dataForCell)
         
         cell.tapToCheck = { data in
-            dataForCell.manageStateCheck = true
+            dataForCell.isCheck = true
             let dataInCell = self.listUserToShow[indexPath.row]
             if self.listUserChoiceToShow.contains(dataInCell) {
                 print("Do nothing")
@@ -88,7 +88,7 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         }
         
         cell.tapToUnCheck = { data in
-            dataForCell.manageStateCheck = false
+            dataForCell.isCheck = false
             let dataInCell = self.listUserToShow[indexPath.row]
             var sum = 0
             if self.listUserChoiceToShow.contains(dataInCell) {

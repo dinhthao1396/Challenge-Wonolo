@@ -14,14 +14,6 @@ class ModelListFollowOrFollowed: NSObject {
     var urlImage = ""
     var id = ""
     var isCheck: Bool
-    var manageStateCheck:Bool {
-        get {
-            return isCheck
-        }
-        set {
-            isCheck = newValue
-        }
-    }
     
     init?(JSON: [String: Any], isCheck: Bool) {
         guard let userName = JSON["username"] as? String else { return nil }
