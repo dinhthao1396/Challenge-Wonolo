@@ -20,14 +20,19 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-        getListFollowOrListFollowed()
         myTableView.delegate = self
         myTableView.dataSource = self
         let nib = UINib(nibName: "ListFollowAndFollowedTableViewCell", bundle: nil)
         myTableView.register(nib, forCellReuseIdentifier: "myCell")
         myTableView.estimatedRowHeight = 50
         myTableView.rowHeight = UITableViewAutomaticDimension
-        // Do any additional setup after loading the view.
+        checkInternet(flag: false) { (isConnectInterner) in
+            if isConnectInterner {
+                self.getListFollowOrListFollowed()
+            } else {
+                self.showAlertWarning(title: "No Internet", content: "Please check your connection and\n Try again")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,14 +116,6 @@ class ListFollowAndFollowedViewController: UIViewController, UITableViewDataSour
         }
     }
     
-    func showAlertWarning(title: String, content: String) {
-        let alert = UIAlertController(title: title, message: content , preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
-            print("User Click Ok To Choice Again")
-        }))
-        self.present(alert, animated:  true, completion: nil)
-    }
-
     /*
     // MARK: - Navigation
 

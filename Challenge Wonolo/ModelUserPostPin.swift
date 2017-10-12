@@ -15,7 +15,7 @@ class ModelUserPostPin: NSObject {
     var userName = ""
     var fullName = ""
     var urlImageUser = ""
-    var text = ""
+    var text: String?
     var lat = Float()
     var lng = Float()
     var urlImageCaption = ""
@@ -31,17 +31,21 @@ class ModelUserPostPin: NSObject {
             let images = JSON["images"] as? [String: Any],
             let low = images["low_resolution"] as? [String: Any],
             let urlImageCaption = low["url"] as? String,
-            let caption = JSON["caption"] as? [String: Any],
-            let text = caption["text"] as? String,
+            //let caption = JSON["caption"] as? [String: Any],
+            //let text = caption["text"] as? String,
             let location = JSON["location"] as? [String: Any],
             let lat = location["latitude"] as? Float,
             let lng = location["longitude"] as? Float,
             let nameLocation = location["name"] as? String,
             let idLocation = location["id"] as? Float else { return nil }
+        if let caption = JSON["caption"] as? [String: Any] {
+            if let text = caption["text"] as? String {
+                self.text = text
+            }
+        }
         self.userName = userName
         self.fullName = fullName
         self.urlImageCaption = urlImageCaption
-        self.text = text
         self.lat = lat
         self.lng = lng
         self.urlImageUser = urlImageUser

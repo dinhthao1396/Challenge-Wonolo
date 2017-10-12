@@ -24,7 +24,14 @@ class ShowUserInformationViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         userImage.layer.cornerRadius = userImage.frame.size.width / 2
         userImage.clipsToBounds = true
-        setDataForView()
+        checkInternet(flag: false) { (isConnectInterner) in
+            if isConnectInterner {
+                self.setDataForView()
+            } else {
+                self.showAlertWarning(title: "No Internet", content: "Please check your connection and\n Try again")
+                self.setDataForView()
+            }
+        }
         // Do any additional setup after loading the view.
     }
     

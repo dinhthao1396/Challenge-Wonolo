@@ -24,6 +24,29 @@ extension UIImageView {
 }
 
 extension UIViewController {
+    
+    func checkInternet(flag:Bool, completionHandler:@escaping (_ internet:Bool) -> Void) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        let url = NSURL(string: "http://www.appleiphonecell.com/")
+        let request = NSMutableURLRequest(url: url! as URL)
+        request.httpMethod = "HEAD"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
+        request.timeoutInterval = 2.0
+        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue:OperationQueue.main, completionHandler: {(response, data, error) -> Void in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            let response = response as! HTTPURLResponse?
+            completionHandler(response?.statusCode == 200)
+        })
+    }
+    
+    func showAlertWarning(title: String, content: String) {
+        let alert = UIAlertController(title: title, message: content , preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+            print("User Click Ok To Check Connect")
+        }))
+        self.present(alert, animated:  true, completion: nil)
+    }
+
     func getUserData(url: String, completion: @escaping (_ data: [String: Any]?, String, String) -> Void) {
         Alamofire.request(url)
         .validate()

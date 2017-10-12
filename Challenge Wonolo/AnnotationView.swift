@@ -34,7 +34,7 @@ class AnnotationView: MKAnnotationView {
 
 class MyCusTomAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
-    var caption: String!
+    var caption: String?
     var userName: String!
     var urlImageCaption: String!
     var userId: String!

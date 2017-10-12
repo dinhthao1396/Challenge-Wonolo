@@ -24,7 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var fullNameDetails = ""
     var userIdDetails = ""
     var urlImageCaptionetails = ""
-    var captionDetails = ""
+    var captionDetails: String?
     var nameLocationDetails = ""
     var latCenter = ""
     var lngCenter = ""
@@ -57,7 +57,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         if isAllList == 0 {
-            print("List Mode")
+            print("View marker Mode")
         }
         if isAllList == 1 && isSelectMarker == 0 {
             latCenter = String(mapView.centerCoordinate.latitude)
@@ -72,9 +72,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func timerAction() {
         counterTime = counterTime + 0.5
-        if counterTime == 1.5 {
+        if counterTime == 1 {
             timer.invalidate()
-            loadDataAroundLocationCenter(lat: latCenter, lng: lngCenter)
+            self.checkInternet(flag: false) { (isConnectInternet) in
+                if isConnectInternet {
+                    self.loadDataAroundLocationCenter(lat: self.latCenter, lng: self.lngCenter)
+                } else {
+                    self.showAlertWarning(title: "No Internet", content: "Please check your connection and\n Try again")
+                }
+            }
         }
     }
     
@@ -106,8 +112,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         let latitude:CLLocationDegrees = (locationManager.location?.coordinate.latitude)!
         let longitude:CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
-        let latDelta:CLLocationDegrees = 0.05
-        let lonDelta:CLLocationDegrees = 0.05
+        let latDelta:CLLocationDegrees = 0.02
+        let lonDelta:CLLocationDegrees = 0.02
         let span = MKCoordinateSpanMake(latDelta, lonDelta)
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegionMake(location, span)
@@ -132,7 +138,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func checkDataToShow() {
         if isAllList == 1 {
-            print("List Mode")
+            print("Marker Mode")
         } else {
             loadDataLocation(listUserId: listUserIdFromListView)
         }
@@ -143,7 +149,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             myMaps.delegate = self
             myMaps.showsUserLocation = true
             let annotation = MyCusTomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(value.lat) , longitude: Double(value.lng)))
-            annotation.caption = value.text
+            if value.text != nil {
+                annotation.caption = value.text
+            }
             annotation.userName = value.userName
             annotation.urlImageCaption = value.urlImageCaption
             annotation.userId = value.userId
@@ -165,7 +173,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let myAnnotation = view.annotation as! MyCusTomAnnotation
         let views = Bundle.main.loadNibNamed("CustomCalloutViewController", owner: nil, options: nil)
         let calloutView = views?[0] as! CustomCalloutViewController
-        calloutView.captionPin.text = myAnnotation.caption
+        if myAnnotation.caption != nil {
+            calloutView.captionPin.text = myAnnotation.caption
+        } else {
+            calloutView.captionPin.text = "No Caption"
+        }
         calloutView.userNamePin.text = myAnnotation.userName
         calloutView.userId = myAnnotation.userId
         calloutView.fullName = myAnnotation.fullName
@@ -203,7 +215,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             desViewController.userIdDetails = self.userIdDetails
             desViewController.nameLocationDetails = self.nameLocationDetails
             desViewController.captionDetails = self.captionDetails
-            
         }
     }
     
@@ -225,7 +236,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     }
                 self.setDataForPin(dataArray: self.listDataToShow)
                 }
-                print("Now, the piker in map is \(self.listDataToShow.count)")
+                print("Now, the marker in map is \(self.listDataToShow.count)")
                 self.view.reloadInputViews()
                 self.myMaps.reloadInputViews()
             }
@@ -267,7 +278,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation

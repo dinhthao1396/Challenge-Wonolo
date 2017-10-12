@@ -22,7 +22,7 @@ class DetailPinViewController: UIViewController {
     var fullNameDetails = ""
     var userIdDetails = ""
     var urlImageCaptionetails = ""
-    var captionDetails = ""
+    var captionDetails: String?
     var nameLocationDetails = ""
 
     override func viewDidLoad() {
@@ -48,12 +48,18 @@ class DetailPinViewController: UIViewController {
     func setDataForDetailsViewController() {
         userImage.layer.cornerRadius = userImage.frame.size.width / 2
         userImage.clipsToBounds = true
-        userImage.downLoadFromUrlDemoSimple(urlSimple: urlImageUserDetails)
         userName.text = "User: " + userNameDetails
         fullName.text = "Name: " + userNameDetails
         userId.text = "Id: " + userIdDetails
-        imageCaption.downLoadFromUrlDemoSimple(urlSimple: urlImageCaptionetails)
-        caption.text = "Caption: " + captionDetails
+        checkInternet(flag: false) { (isConnectInterner) in
+            if isConnectInterner {
+                self.imageCaption.downLoadFromUrlDemoSimple(urlSimple: self.urlImageCaptionetails)
+                self.userImage.downLoadFromUrlDemoSimple(urlSimple: self.urlImageUserDetails)
+            } else {
+                self.showAlertWarning(title: "No Internet", content: "Please check your connection and\n Try again")
+            }
+        }
+        caption.text = captionDetails!
         nameLocation.text = nameLocationDetails
         if UIDevice.current.orientation.isLandscape {
             imageCaption.contentMode = UIViewContentMode.scaleAspectFit
