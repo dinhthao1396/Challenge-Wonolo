@@ -46,8 +46,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         let latitude:CLLocationDegrees = (locationManager.location?.coordinate.latitude)!
         let longitude:CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
-        let latDelta:CLLocationDegrees = 0.03
-        let longDelta:CLLocationDegrees = 0.03
+        let latDelta:CLLocationDegrees = 0.05
+        let longDelta:CLLocationDegrees = 0.05
         let span = MKCoordinateSpanMake(latDelta, longDelta)
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegionMake(location, span)
@@ -112,8 +112,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         let latitude:CLLocationDegrees = (locationManager.location?.coordinate.latitude)!
         let longitude:CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
-        let latDelta:CLLocationDegrees = 0.03
-        let longDelta:CLLocationDegrees = 0.03
+        let latDelta:CLLocationDegrees = 0.05
+        let longDelta:CLLocationDegrees = 0.05
         let span = MKCoordinateSpanMake(latDelta, longDelta)
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegionMake(location, span)
@@ -221,7 +221,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func loadDataAroundLocationCenter(lat: String, lng: String) {
         removeAnnotation()
         listDataToShow.removeAll()
-        let urlToShow = "https://api.instagram.com/v1/media/search?lat=\(lat)&lng=\(lng)&access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
+        let urlToShow = "https://api.instagram.com/v1/media/search?lat=\(lat)&lng=\(lng)&distance=3000&access_token=6108635271.c0befbb.2b2ccd4afb6d4f89b53499c41eacee6b"
         print(urlToShow)
         getListUserLocation(url: urlToShow, completion: { (jsonData, success, error) in
             if jsonData == nil {
