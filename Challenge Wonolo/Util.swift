@@ -24,14 +24,13 @@ extension UIImageView {
 }
 
 extension UIViewController {
-    
     func checkInternet(flag:Bool, completionHandler:@escaping (_ internet:Bool) -> Void) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let url = NSURL(string: "http://www.appleiphonecell.com/")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "HEAD"
         request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
-        request.timeoutInterval = 2.0
+        request.timeoutInterval = 3.0
         NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue:OperationQueue.main, completionHandler: {(response, data, error) -> Void in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             let response = response as! HTTPURLResponse?

@@ -31,8 +31,6 @@ class ModelUserPostPin: NSObject {
             let images = JSON["images"] as? [String: Any],
             let low = images["low_resolution"] as? [String: Any],
             let urlImageCaption = low["url"] as? String,
-            //let caption = JSON["caption"] as? [String: Any],
-            //let text = caption["text"] as? String,
             let location = JSON["location"] as? [String: Any],
             let lat = location["latitude"] as? Float,
             let lng = location["longitude"] as? Float,

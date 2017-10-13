@@ -46,8 +46,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         let latitude:CLLocationDegrees = (locationManager.location?.coordinate.latitude)!
         let longitude:CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
-        let latDelta:CLLocationDegrees = 0.05
-        let longDelta:CLLocationDegrees = 0.05
+        let latDelta:CLLocationDegrees = 0.03
+        let longDelta:CLLocationDegrees = 0.03
         let span = MKCoordinateSpanMake(latDelta, longDelta)
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegionMake(location, span)
@@ -112,9 +112,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         let latitude:CLLocationDegrees = (locationManager.location?.coordinate.latitude)!
         let longitude:CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
-        let latDelta:CLLocationDegrees = 0.02
-        let lonDelta:CLLocationDegrees = 0.02
-        let span = MKCoordinateSpanMake(latDelta, lonDelta)
+        let latDelta:CLLocationDegrees = 0.03
+        let longDelta:CLLocationDegrees = 0.03
+        let span = MKCoordinateSpanMake(latDelta, longDelta)
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let region = MKCoordinateRegionMake(location, span)
         myMaps.setRegion(region, animated: true)
